@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">OnlineStore</string>
+    <string name="fe">Faculty of Engineering</string>
+
+
+    <string name="first_name">First Name</string>
+
+    <string name="inbox">Inbox</string>
+
+</resources>
