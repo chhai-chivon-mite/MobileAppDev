@@ -1,4 +1,4 @@
-package kh.edu.rupp.fe.onlinestore;
+package kh.edu.rupp.fe.onlinestore.activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
+
+import kh.edu.rupp.fe.onlinestore.R;
 
 public class MainActivity extends AppCompatActivity {
 

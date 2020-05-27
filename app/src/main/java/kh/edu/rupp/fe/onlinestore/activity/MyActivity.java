@@ -1,4 +1,4 @@
-package kh.edu.rupp.fe.onlinestore;
+package kh.edu.rupp.fe.onlinestore.activity;
 
 import android.os.Bundle;
 

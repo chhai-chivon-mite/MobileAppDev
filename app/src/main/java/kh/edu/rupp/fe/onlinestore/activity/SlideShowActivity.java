@@ -1,10 +1,13 @@
-package kh.edu.rupp.fe.onlinestore;
+package kh.edu.rupp.fe.onlinestore.activity;
 
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
+
+import kh.edu.rupp.fe.onlinestore.R;
+import kh.edu.rupp.fe.onlinestore.adapter.SlideShowAdapter;
 
 public class SlideShowActivity extends AppCompatActivity {
 

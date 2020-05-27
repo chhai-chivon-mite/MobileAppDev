@@ -1,4 +1,4 @@
-package kh.edu.rupp.fe.onlinestore;
+package kh.edu.rupp.fe.onlinestore.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,8 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
+
+import kh.edu.rupp.fe.onlinestore.R;
 
 public class SlideShowAdapter extends PagerAdapter {
 

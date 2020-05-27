@@ -1,8 +1,7 @@
-package kh.edu.rupp.fe.onlinestore;
+package kh.edu.rupp.fe.onlinestore.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -10,9 +9,8 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
+import kh.edu.rupp.fe.onlinestore.R;
 
 public class LoginActivity extends AppCompatActivity {
 

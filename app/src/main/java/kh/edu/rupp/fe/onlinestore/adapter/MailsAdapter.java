@@ -1,5 +1,7 @@
-package kh.edu.rupp.fe.onlinestore;
+package kh.edu.rupp.fe.onlinestore.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.gson.Gson;
+
+import kh.edu.rupp.fe.onlinestore.activity.MailDetailActivity;
+import kh.edu.rupp.fe.onlinestore.model.Mail;
+import kh.edu.rupp.fe.onlinestore.R;
 
 public class MailsAdapter extends RecyclerView.Adapter<MailsAdapter.MailViewHolder> {
 
@@ -28,7 +36,7 @@ public class MailsAdapter extends RecyclerView.Adapter<MailsAdapter.MailViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MailViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MailViewHolder holder, int position) {
         Mail mail = mails[position];
         holder.txtSender.setText(mail.getSender());
         holder.txtSubject.setText(mail.getSubject());
@@ -39,6 +47,25 @@ public class MailsAdapter extends RecyclerView.Adapter<MailsAdapter.MailViewHold
         } else {
             holder.imgFavorite.setImageResource(R.drawable.ic_favorite_off);
         }
+
+        // Apply on click listener on each view holder
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int index = holder.getAdapterPosition();
+                Mail mail = mails[index];
+
+                // Serialize mail object to json string
+                Gson gson = new Gson();
+                String mailJson = gson.toJson(mail);
+
+                // Start MailDetailActivity
+                Context context = view.getContext();
+                Intent intent = new Intent(context, MailDetailActivity.class);
+                intent.putExtra(MailDetailActivity.EXTRA_MAIL, mailJson);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

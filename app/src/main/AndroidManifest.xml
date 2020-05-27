@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".MyApp"
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MailsActivity">
+        <activity android:name=".activity.MailsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,7 +25,9 @@
 
 
 
-        <activity android:name=".MyActivity" />
+        <activity android:name=".activity.MyActivity" />
+        <activity android:name=".activity.MailDetailActivity" />
+        <activity android:name=".activity.LoginActivity" />
 
     </application>
 

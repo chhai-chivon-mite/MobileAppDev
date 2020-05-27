@@ -1,10 +1,11 @@
-package kh.edu.rupp.fe.onlinestore;
+package kh.edu.rupp.fe.onlinestore.model;
 
 public class Mail {
 
     private String sender;
     private String subject;
     private String body;
+    private String imageUrl;
     private long date;
     private boolean isFavorite;
 
@@ -30,6 +31,14 @@ public class Mail {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public long getDate() {
