@@ -7,4 +7,10 @@
 
     <string name="inbox">Inbox</string>
 
+    <!-- Menu -->
+    <string name="products">Products</string>
+    <string name="categories">Categories</string>
+    <string name="profile">Profile</string>
+    <string name="settings">Settings</string>
+
 </resources>
