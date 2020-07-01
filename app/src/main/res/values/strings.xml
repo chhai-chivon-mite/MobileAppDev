@@ -13,4 +13,6 @@
     <string name="profile">Profile</string>
     <string name="settings">Settings</string>
 
+    <string name="gmap_api_key">AIzaSyBWC1WWydamqCheWkjm3c1Et-TkFRQGHy0</string>
+
 </resources>
