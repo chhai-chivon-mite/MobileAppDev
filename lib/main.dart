@@ -48,48 +48,37 @@ final categoriesListView = SizedBox(
   ),
 );
 
-final thisWeekDealTitleWidget = Row(
-  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  children: [
-    Text('This week\'s deals', style: TextStyle(fontWeight: FontWeight.bold)),
-    Text('See all')
-  ],
-);
+final thisWeekDealTitleWidget = sectionTitleWidget('This week\'s deals');
 
-final thisWeekDealContentWidget = Row(
-  children: [
-    Expanded(
-        child: Container(
-      height: 200,
-      color: Colors.grey,
-    )),
-    Expanded(
-        child: Container(
-      height: 200,
-      color: Colors.blue,
-    )),
-  ],
-);
+final thisWeekDealContentWidget = productsRowWidget(
+    productItemWidget('BeoPlay Speaker', 'Bang and Olufsen', 755),
+    productItemWidget('Leather Wristwatch', 'Tag Heuer', 450));
+
+final bestSellingTitleWidget = sectionTitleWidget('Best Selling');
+
+final bestSellingContentWidget = productsRowWidget(
+    productItemWidget('BeoPlay Speaker 2', 'Bang and Olufsen 2', 555),
+    productItemWidget('Leather Wristwatch 2', 'Tag Heuer 2', 444));
 
 final body = Padding(
     padding: EdgeInsets.symmetric(horizontal: 16),
     child: SafeArea(
-        child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
       children: [
         topIconsWidget,
         searchWidget,
-        SizedBox(
-          height: 16,
-        ),
+        verticalMargin(16),
         slideShowWidget,
-        SizedBox(
-          height: 16,
-        ),
+        verticalMargin(16),
         Text('Categories', style: TextStyle(fontWeight: FontWeight.bold)),
         categoriesListView,
         thisWeekDealTitleWidget,
-        thisWeekDealContentWidget
+        verticalMargin(16),
+        thisWeekDealContentWidget,
+        verticalMargin(16),
+        bestSellingTitleWidget,
+        verticalMargin(16),
+        bestSellingContentWidget
       ],
     )));
 
@@ -130,5 +119,56 @@ Widget categoryItemWidget(IconData iconData, String name) {
         Text(name)
       ],
     ),
+  );
+}
+
+Widget verticalMargin(double value) {
+  return SizedBox(
+    height: value,
+  );
+}
+
+Widget horizontalMargin(double value) {
+  return SizedBox(
+    width: value,
+  );
+}
+
+Widget productItemWidget(String title, String brand, double price) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Image.asset('images/ite_banner.jpg', height: 140),
+      Text(title, textAlign: TextAlign.left),
+      Text(brand),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [Text('\$$price'), Icon(Icons.star)],
+      )
+    ],
+  );
+}
+
+Widget sectionTitleWidget(String title) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+      Text('See all')
+    ],
+  );
+}
+
+Widget productsRowWidget(Widget p1, Widget p2) {
+  return Row(
+    children: [
+      Expanded(
+          child: Container(
+        height: 200,
+        child: p1,
+      )),
+      horizontalMargin(16),
+      Expanded(child: Container(height: 200, child: p2)),
+    ],
   );
 }
