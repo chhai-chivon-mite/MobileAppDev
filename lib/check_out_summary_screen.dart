@@ -58,7 +58,9 @@ class CheckOutSummaryScreen extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.all(8.0),
               child: RaisedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
                 child: Text('Back'),
                 color: Colors.white,
                 shape: RoundedRectangleBorder(side: BorderSide(color: Colors.orange)),

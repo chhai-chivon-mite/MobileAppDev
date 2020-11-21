@@ -6,3 +6,4 @@ class AccountScreen extends StatelessWidget {
     return Center(child: Text('This is Home Screen'),);
   }
 }
+
