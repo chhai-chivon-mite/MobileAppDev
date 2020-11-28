@@ -1,3 +1,4 @@
+import 'package:ecom/check_out_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -10,8 +11,7 @@ class HomeScreen extends StatefulWidget {
   }
 }
 
-class _State extends State<HomeScreen>{
-
+class _State extends State<HomeScreen> {
   bool isLoading = false;
 
   @override
@@ -31,8 +31,9 @@ class _State extends State<HomeScreen>{
           icon: Icon(Icons.notifications),
           onPressed: () {
             // Move to CheckOutSummaryScreen
-            final checkOutSummaryScreenWidget = CheckOutSummaryScreen();
-            final route = MaterialPageRoute(builder: (context) => checkOutSummaryScreenWidget);
+            final checkOutScreenWidget = CheckOutScreen();
+            final route =
+                MaterialPageRoute(builder: (context) => checkOutScreenWidget);
             Navigator.of(context).push(route);
           },
         )
@@ -74,9 +75,11 @@ class _State extends State<HomeScreen>{
 
     final thisWeekDealTitleWidget = sectionTitleWidget('This week\'s deals');
 
-    final thisWeekDealContentWidget = isLoading ? Center(child: CircularProgressIndicator()) : productsRowWidget(
-        productItemWidget('BeoPlay Speaker', 'Bang and Olufsen', 755),
-        productItemWidget('Leather Wristwatch', 'Tag Heuer', 450));
+    final thisWeekDealContentWidget = isLoading
+        ? Center(child: CircularProgressIndicator())
+        : productsRowWidget(
+            productItemWidget('BeoPlay Speaker', 'Bang and Olufsen', 755),
+            productItemWidget('Leather Wristwatch', 'Tag Heuer', 450));
 
     /*Widget thisWeekDealContentWidget;
     if(isLoading){
@@ -98,23 +101,23 @@ class _State extends State<HomeScreen>{
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: SafeArea(
             child: ListView(
-              children: [
-                topIconsWidget,
-                searchWidget,
-                verticalMargin(16),
-                slideShowWidget,
-                verticalMargin(16),
-                Text('Categories', style: TextStyle(fontWeight: FontWeight.bold)),
-                categoriesListView,
-                thisWeekDealTitleWidget,
-                verticalMargin(16),
-                thisWeekDealContentWidget,
-                verticalMargin(16),
-                bestSellingTitleWidget,
-                verticalMargin(16),
-                bestSellingContentWidget
-              ],
-            )));
+          children: [
+            topIconsWidget,
+            searchWidget,
+            verticalMargin(16),
+            slideShowWidget,
+            verticalMargin(16),
+            Text('Categories', style: TextStyle(fontWeight: FontWeight.bold)),
+            categoriesListView,
+            thisWeekDealTitleWidget,
+            verticalMargin(16),
+            thisWeekDealContentWidget,
+            verticalMargin(16),
+            bestSellingTitleWidget,
+            verticalMargin(16),
+            bestSellingContentWidget
+          ],
+        )));
   }
 
   Widget verticalMargin(double value) {
@@ -162,9 +165,9 @@ class _State extends State<HomeScreen>{
       children: [
         Expanded(
             child: Container(
-              height: 200,
-              child: p1,
-            )),
+          height: 200,
+          child: p1,
+        )),
         horizontalMargin(16),
         Expanded(child: Container(height: 200, child: p2)),
       ],
