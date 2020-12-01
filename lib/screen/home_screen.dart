@@ -1,8 +1,8 @@
-import 'package:ecom/check_out_screen.dart';
+import 'package:ecom/model/product.dart';
+import 'package:ecom/screen/check_out_screen.dart';
+import 'package:ecom/screen/product_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import 'check_out_summary_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -16,6 +16,31 @@ class _State extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final product1 = Product(
+        1,
+        'BeoPlay Speaker',
+        'Bang and Olufsen',
+        'https://rupp-ite.s3-ap-southeast-1.amazonaws.com/acer-monitor.jpg',
+        30.5);
+    final product2 = Product(
+        2,
+        'Leather Wristwatch',
+        'Tag Heuer',
+        'https://rupp-ite.s3-ap-southeast-1.amazonaws.com/too-much-never-enough.jpg',
+        100);
+    final product3 = Product(
+        3,
+        'Kids\' Messi 16.3 J',
+        'Addidas',
+        'https://rupp-ite.s3-ap-southeast-1.amazonaws.com/soccer-shoe.jpg',
+        49.99);
+    final product4 = Product(
+        4,
+        'Hardside Expandable Luggage',
+        'Tag Heuer',
+        'https://rupp-ite.s3-ap-southeast-1.amazonaws.com/SpinnerLuggage.jpg',
+        25);
+
     final topIconsWidget = Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -78,8 +103,7 @@ class _State extends State<HomeScreen> {
     final thisWeekDealContentWidget = isLoading
         ? Center(child: CircularProgressIndicator())
         : productsRowWidget(
-            productItemWidget('BeoPlay Speaker', 'Bang and Olufsen', 755),
-            productItemWidget('Leather Wristwatch', 'Tag Heuer', 450));
+            productItemWidget(product1), productItemWidget(product2));
 
     /*Widget thisWeekDealContentWidget;
     if(isLoading){
@@ -94,8 +118,7 @@ class _State extends State<HomeScreen> {
     final bestSellingTitleWidget = sectionTitleWidget('Best Selling');
 
     final bestSellingContentWidget = productsRowWidget(
-        productItemWidget('BeoPlay Speaker 2', 'Bang and Olufsen 2', 555),
-        productItemWidget('Leather Wristwatch 2', 'Tag Heuer 2', 444));
+        productItemWidget(product3), productItemWidget(product4));
 
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 16),
@@ -174,18 +197,31 @@ class _State extends State<HomeScreen> {
     );
   }
 
-  Widget productItemWidget(String title, String brand, double price) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Image.asset('images/ite_banner.jpg', height: 140),
-        Text(title, textAlign: TextAlign.left),
-        Text(brand),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [Text('\$$price'), Icon(Icons.star)],
-        )
-      ],
+  Widget productItemWidget(Product product) {
+    return GestureDetector(
+      onTap: () {
+        //Navigator.of(context).pushNamed('/productDetail', arguments: title);
+        final productDetailScreen = ProductDetailScreen(product);
+        final route =
+            MaterialPageRoute(builder: (context) => productDetailScreen);
+        Navigator.of(context).push(route);
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.network(product.imageUrl, height: 140),
+          Text(
+            product.name,
+            textAlign: TextAlign.left,
+            maxLines: 1,
+          ),
+          Text(product.brand),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [Text(product.formattedPrice), Icon(Icons.star)],
+          )
+        ],
+      ),
     );
   }
 }
