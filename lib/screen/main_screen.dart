@@ -3,6 +3,7 @@ import 'package:ecom/screen/home_screen.dart';
 import 'package:ecom/screen/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'account_screen.dart';
 import 'more_screen.dart';
@@ -58,5 +59,10 @@ class _State extends State<MainScreen> {
       body: body,
       bottomNavigationBar: bottomNavBar,
     );
+  }
+
+  void test() {
+    final sharedPreferenceTask = SharedPreferences.getInstance();
+    sharedPreferenceTask.then((sharedPreference) {}).catchError((error) {});
   }
 }

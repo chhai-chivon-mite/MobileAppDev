@@ -23,6 +23,19 @@ class _State extends State<AccountScreen> {
             Text('You are not logged in yet.'),
             FlatButton(
                 onPressed: () async {
+                  /*final route =
+                      MaterialPageRoute(builder: (context) => LoginScreen());
+                  final resultTask = Navigator.of(context).push(route);
+                  resultTask.then((result) {
+                    if (result != null) {
+                      setState(() {
+                        _user = result;
+                      });
+                    } else {
+                      print('No login');
+                    }
+                  });*/
+
                   final route =
                       MaterialPageRoute(builder: (context) => LoginScreen());
                   final result = await Navigator.of(context).push(route);

@@ -1,135 +1,36 @@
-import 'dart:convert';
-
-import 'package:ecom/model/home_response.dart';
 import 'package:ecom/model/product.dart';
 import 'package:ecom/screen/check_out_screen.dart';
 import 'package:ecom/screen/product_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:http/http.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen2 extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return _State();
   }
 }
 
-class _State extends State<HomeScreen> {
-  Future<HomeResponse> loadHomeDataTask;
+class _State extends State<HomeScreen2> {
+  bool isLoading = true;
+  Product product1;
+  Product product2;
 
   @override
   void initState() {
     super.initState();
 
-    loadHomeDataTask = loadHomeDataFromServer();
+    loadProductsFromServer().then((products) {
+      print('Load products completed');
+      setState(() {
+        product1 = products[0];
+        product2 = products[1];
+        isLoading = false;
+      });
+    });
   }
 
   @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: loadHomeDataTask,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasError) {
-            // Show error UI
-            return Center(child: Text('Error while loading data from server.'));
-          } else {
-            // Build home UI
-            return buildHomeUi(snapshot.data);
-          }
-        } else {
-          // Show loading
-          return Center(child: CircularProgressIndicator());
-        }
-      },
-    );
-  }
-
-  Widget buildHomeUi(HomeResponse homeResponse) {
-    final topIconsWidget = Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        IconButton(
-          icon: Icon(Icons.message),
-          onPressed: () {},
-        ),
-        IconButton(
-          icon: Icon(Icons.notifications),
-          onPressed: () {
-            // Move to CheckOutSummaryScreen
-            final checkOutScreenWidget = CheckOutScreen();
-            final route =
-                MaterialPageRoute(builder: (context) => checkOutScreenWidget);
-            Navigator.of(context).push(route);
-          },
-        )
-      ],
-    );
-    final searchWidget = Row(
-      children: [
-        Flexible(
-          child: TextField(
-            decoration: InputDecoration(hintText: 'Search for products'),
-          ),
-        ),
-        SizedBox(
-          width: 16,
-        ),
-        FloatingActionButton(
-          onPressed: () {},
-          child: Icon(Icons.camera_alt),
-          backgroundColor: Colors.orange,
-        ),
-      ],
-    );
-
-    final slideImageUrl = homeResponse.slides.first;
-    final slideShowWidget = Image.network(slideImageUrl);
-
-    final categoriesListView = SizedBox(
-      height: 120,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: homeResponse.categories.map((category) {
-          return categoryItemWidget(FontAwesomeIcons.book, category.name);
-        }).toList(),
-      ),
-    );
-
-    final deal1 = homeResponse.thisWeekDeals[0];
-    final deal2 = homeResponse.thisWeekDeals[1];
-    final thisWeekDealsWidget =
-        productsRowWidget(productItemWidget(deal1), productItemWidget(deal2));
-
-    final best1 = homeResponse.bestSellings[0];
-    final best2 = homeResponse.bestSellings[1];
-    final bestSellingsWidget =
-        productsRowWidget(productItemWidget(best1), productItemWidget(best2));
-
-    return SafeArea(
-        child: ListView(
-      padding: EdgeInsets.symmetric(horizontal: 16),
-      children: [
-        topIconsWidget,
-        searchWidget,
-        verticalMargin(16),
-        slideShowWidget,
-        verticalMargin(16),
-        Text('Categories', style: TextStyle(fontWeight: FontWeight.bold)),
-        categoriesListView,
-        sectionTitleWidget('This Week\s Deals'),
-        verticalMargin(16),
-        thisWeekDealsWidget,
-        verticalMargin(16),
-        sectionTitleWidget('Best Selling'),
-        verticalMargin(16),
-        bestSellingsWidget
-      ],
-    ));
-  }
-
-  /*@override
   Widget build(BuildContext context) {
     final product3 = Product(
         3,
@@ -199,30 +100,10 @@ class _State extends State<HomeScreen> {
 
     final thisWeekDealTitleWidget = sectionTitleWidget('This week\'s deals');
 
-    /*final thisWeekDealContentWidget = isLoading
+    final thisWeekDealContentWidget = isLoading
         ? Center(child: CircularProgressIndicator())
         : productsRowWidget(
-            productItemWidget(product1), productItemWidget(product2));*/
-    final thisWeekDealContentWidget = FutureBuilder(
-      future: loadProductTask,
-      builder: (context, snapshot) {
-        print('builder');
-        if (snapshot.connectionState == ConnectionState.done) {
-          // Completed
-          if (snapshot.hasError) {
-            return Text('Error while loading data from server.');
-          } else {
-            final product1 = snapshot.data[0];
-            final product2 = snapshot.data[1];
-            return productsRowWidget(
-                productItemWidget(product1), productItemWidget(product2));
-          }
-        } else {
-          // Uncompleted
-          return Center(child: CircularProgressIndicator());
-        }
-      },
-    );
+            productItemWidget(product1), productItemWidget(product2));
 
     /*Widget thisWeekDealContentWidget;
     if(isLoading){
@@ -260,7 +141,7 @@ class _State extends State<HomeScreen> {
             bestSellingContentWidget
           ],
         )));
-  }*/
+  }
 
   Widget verticalMargin(double value) {
     return SizedBox(
@@ -346,47 +227,25 @@ class _State extends State<HomeScreen> {
 
   Future<List<Product>> loadProductsFromServer() async {
     print('loadProductsFromServer');
-    final response =
-        await get('http://localhost/test/ruppmad-api/products.php');
-    if (response.statusCode == 200) {
-      print('Success: ' + response.body);
-      List<dynamic> jsonArray = jsonDecode(response.body);
+    //TMP: fake load data from server
 
-      // Using Java style
-      /*List<Product> products = List<Product>();
-      for (int i = 0; i < jsonArray.length; i++) {
-        print('i=$i');
-        Map<String, dynamic> jsonObject = jsonArray[i];
-        Product product = Product.fromJson(jsonObject);
-        products.add(product);
-      }
-      return products;*/
+    final delayDuration = Duration(seconds: 3);
+    await Future.delayed(delayDuration);
 
-      // Using dart style
-      return jsonArray
-          .map((jsonObject) => Product.fromJson(jsonObject))
-          .toList();
-    } else {
-      print('Error: ' + response.toString());
-      throw Exception();
-    }
-  }
+    final product1 = Product(
+        1,
+        'BeoPlay Speaker',
+        'Bang and Olufsen',
+        'https://rupp-ite.s3-ap-southeast-1.amazonaws.com/acer-monitor.jpg',
+        30.5);
+    final product2 = Product(
+        2,
+        'Leather Wristwatch',
+        'Tag Heuer',
+        'https://rupp-ite.s3-ap-southeast-1.amazonaws.com/too-much-never-enough.jpg',
+        100);
 
-  Future<HomeResponse> loadHomeDataFromServer() async {
-    print('loadHomeDataFromServer');
-    await Future.delayed(Duration(seconds: 3));
-    try {
-      final response =
-          await get('http://localhost/test/ruppmad-api/products.php');
-      if (response.statusCode != 200) {
-        throw Exception('loadHomeDataFromServer error');
-      }
-
-      Map<String, dynamic> responseJson = jsonDecode(response.body);
-      return HomeResponse.fromJson(responseJson);
-    } catch (ex) {
-      print('Error: $ex');
-      throw ex;
-    }
+    print('Return products');
+    return [product1, product2];
   }
 }
