@@ -4,6 +4,7 @@ import 'package:ecom/model/home_response.dart';
 import 'package:ecom/model/product.dart';
 import 'package:ecom/screen/check_out_screen.dart';
 import 'package:ecom/screen/product_detail_screen.dart';
+import 'package:ecom/screen/product_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart';
@@ -297,7 +298,14 @@ class _State extends State<HomeScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
-        Text('See all')
+        GestureDetector(
+          child: Text('See all'),
+          onTap: () {
+            final route =
+                MaterialPageRoute(builder: (context) => ProductListScreen());
+            Navigator.push(context, route);
+          },
+        )
       ],
     );
   }
@@ -376,8 +384,7 @@ class _State extends State<HomeScreen> {
     print('loadHomeDataFromServer');
     await Future.delayed(Duration(seconds: 3));
     try {
-      final response =
-          await get('http://localhost/test/ruppmad-api/products.php');
+      final response = await get('http://localhost/test/ruppmad-api/home.php');
       if (response.statusCode != 200) {
         throw Exception('loadHomeDataFromServer error');
       }

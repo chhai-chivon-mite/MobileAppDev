@@ -1,6 +1,7 @@
 import 'package:ecom/model/product.dart';
 import 'package:ecom/screen/check_out_screen.dart';
 import 'package:ecom/screen/product_detail_screen.dart';
+import 'package:ecom/utlity/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -102,8 +103,8 @@ class _State extends State<HomeScreen2> {
 
     final thisWeekDealContentWidget = isLoading
         ? Center(child: CircularProgressIndicator())
-        : productsRowWidget(
-            productItemWidget(product1), productItemWidget(product2));
+        : productsRowWidget(Utils.productItemWidget(context, product1),
+            Utils.productItemWidget(context, product2));
 
     /*Widget thisWeekDealContentWidget;
     if(isLoading){
@@ -118,7 +119,8 @@ class _State extends State<HomeScreen2> {
     final bestSellingTitleWidget = sectionTitleWidget('Best Selling');
 
     final bestSellingContentWidget = productsRowWidget(
-        productItemWidget(product3), productItemWidget(product4));
+        Utils.productItemWidget(context, product3),
+        Utils.productItemWidget(context, product4));
 
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 16),
@@ -194,34 +196,6 @@ class _State extends State<HomeScreen2> {
         horizontalMargin(16),
         Expanded(child: Container(height: 200, child: p2)),
       ],
-    );
-  }
-
-  Widget productItemWidget(Product product) {
-    return GestureDetector(
-      onTap: () {
-        //Navigator.of(context).pushNamed('/productDetail', arguments: title);
-        final productDetailScreen = ProductDetailScreen(product);
-        final route =
-            MaterialPageRoute(builder: (context) => productDetailScreen);
-        Navigator.of(context).push(route);
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.network(product.imageUrl, height: 140),
-          Text(
-            product.name,
-            textAlign: TextAlign.left,
-            maxLines: 1,
-          ),
-          Text(product.brand),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [Text(product.formattedPrice), Icon(Icons.star)],
-          )
-        ],
-      ),
     );
   }
 
