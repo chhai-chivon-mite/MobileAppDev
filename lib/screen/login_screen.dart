@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:ecom/model/login_result.dart';
 import 'package:ecom/model/user.dart';
+import 'package:ecom/provider/api_provider.dart';
 import 'package:ecom/utlity/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -25,8 +26,8 @@ class _State extends State<LoginScreen> {
   void initState() {
     super.initState();
 
-    _emailTextController.text = 'abc@rupp.edu.kh';
-    _passwordTextController.text = '123456';
+    _emailTextController.text = 'admin@ited.com';
+    _passwordTextController.text = 'admin';
 
     // Read email from shared preference
     final emailTask = readEmailFromSharedPreference();
@@ -104,9 +105,9 @@ class _State extends State<LoginScreen> {
       showAlertDialog('Invalid Input', 'Please input a correct email address.');
       return;
     }
-    if (password.length < 6) {
+    if (password.length <= 4) {
       showAlertDialog(
-          'Invalid Input', 'Your password must be more than 5 characters.');
+          'Invalid Input', 'Your password must be more than 4 characters.');
       return;
     }
 
@@ -114,14 +115,14 @@ class _State extends State<LoginScreen> {
     setState(() {
       isProcessing = true;
     });
-    login(email, password).then((loginResult) {
-      if (loginResult.success) {
-        Navigator.pop(context, loginResult.user);
+    ApiProvider.instance.login(email, password).then((result) {
+      if (result.success) {
+        Navigator.pop(context, true);
       } else {
         setState(() {
           isProcessing = false;
         });
-        showAlertDialog('Login Fail', loginResult.message);
+        showAlertDialog('Login Fail', result.message);
       }
     });
   }
@@ -150,23 +151,5 @@ class _State extends State<LoginScreen> {
         );
       },
     );
-  }
-
-  Future<LoginResult> login(String email, String password) async {
-    print('Login: $email');
-    try {
-      final url = 'http://localhost/test/ruppmad-api/login.php';
-      final body = {'email': email, 'password': password};
-      final response = await post(url, body: body);
-      if (response.statusCode != 200) {
-        return LoginResult(false, 'Unexpected error.', null);
-      }
-
-      final responseJson = jsonDecode(response.body);
-      return LoginResult.fromJson(responseJson);
-    } catch (exception) {
-      print('[login] Error: $exception');
-      return LoginResult(false, exception.toString(), null);
-    }
   }
 }

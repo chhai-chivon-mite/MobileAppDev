@@ -5,12 +5,10 @@ part 'login_result.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class LoginResult {
-  bool success;
-  String message;
-  @JsonKey(name: 'data')
   User user;
+  String token;
 
-  LoginResult(this.success, this.message, this.user);
+  LoginResult(this.user, this.token);
 
   factory LoginResult.fromJson(Map<String, dynamic> json) =>
       _$LoginResultFromJson(json);

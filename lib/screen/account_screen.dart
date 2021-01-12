@@ -1,4 +1,5 @@
 import 'package:ecom/model/user.dart';
+import 'package:ecom/provider/api_provider.dart';
 import 'package:ecom/screen/login_screen.dart';
 import 'package:ecom/utlity/utils.dart';
 import 'package:flutter/material.dart';
@@ -11,11 +12,9 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _State extends State<AccountScreen> {
-  User _user;
-
   @override
   Widget build(BuildContext context) {
-    if (_user == null) {
+    if (ApiProvider.instance.user == null) {
       return Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -39,10 +38,8 @@ class _State extends State<AccountScreen> {
                   final route =
                       MaterialPageRoute(builder: (context) => LoginScreen());
                   final result = await Navigator.of(context).push(route);
-                  if (result != null) {
-                    setState(() {
-                      _user = result;
-                    });
+                  if (result == true) {
+                    setState(() {});
                   } else {
                     print('No login');
                   }
@@ -64,13 +61,13 @@ class _State extends State<AccountScreen> {
             ),
             Column(
               children: [
-                Text(_user.name),
-                Text(_user.email),
+                Text(ApiProvider.instance.user.name),
+                Text(ApiProvider.instance.user.email),
                 FlatButton(onPressed: () {}, child: Text('Edit Profile')),
                 FlatButton(
                     onPressed: () {
                       setState(() {
-                        _user = null;
+                        ApiProvider.instance.logout();
                       });
                     },
                     child: Text('Log Out'))
