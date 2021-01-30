@@ -5,6 +5,7 @@ import 'package:ecom/model/product.dart';
 import 'package:ecom/screen/check_out_screen.dart';
 import 'package:ecom/screen/product_detail_screen.dart';
 import 'package:ecom/screen/product_list_screen.dart';
+import 'package:ecom/screen/product_list_screen2.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart';
@@ -302,7 +303,7 @@ class _State extends State<HomeScreen> {
           child: Text('See all'),
           onTap: () {
             final route =
-                MaterialPageRoute(builder: (context) => ProductListScreen());
+                MaterialPageRoute(builder: (context) => ProductListScreen2());
             Navigator.push(context, route);
           },
         )

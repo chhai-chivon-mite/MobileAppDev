@@ -1,8 +1,12 @@
 import 'package:ecom/screen/main_screen.dart';
 import 'package:ecom/screen/product_detail_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
+
   // Using route object for navigation
   final app = MaterialApp(
     theme: ThemeData(
